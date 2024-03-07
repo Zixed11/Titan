@@ -3,4 +3,4 @@ A great website to play games, go into apps, and used for evading internet censo
 
 # Deploying methods coming soon, I just learned how to do this stuff 😭😭😭
 
-Modified version of Ultraviolet, I didn't make it, TitaniumNetwork did. It isn't mine, but I want to make it so your able to deploy it to render or vercel, which is coming soon.
+This is a modified version of Ultraviolet, I didn't make it, TitaniumNetwork did. It isn't mine, but I want to make it so your able to deploy it to render or vercel, which is coming soon.
