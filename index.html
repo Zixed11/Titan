@@ -3,74 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Titan</title>
+    <title>Dope Starry Website</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            text-align: center;
+            overflow: hidden;
+            cursor: pointer;
         }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px 0;
-        }
-        h1 {
-            margin: 0;
-            font-size: 36px;
-        }
-        nav {
-            background-color: #444;
-            padding: 10px 0;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 0 20px;
-            font-size: 18px;
-        }
-        nav a:hover {
-            color: #ffd700; /* Dope gold color */
-        }
-        section {
-            padding: 20px 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        .container p {
-            font-size: 20px;
-            line-height: 1.6;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 20px 0;
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Titan</h1>
-    </header>
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Contact</a>
-    </nav>
-    <section>
-        <div class="container">
-            <h2>About Us</h2>
-            <p>This is the dopest website you'll ever visit. We provide top-notch services and strive for excellence in everything we do.</p>
-        </div>
-    </section>
-    <footer>
-        <p>&copy; 2024 Dope Website. All rights reserved.</p>
-    </footer>
+    <canvas id="starfield"></canvas>
+    <script>
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+
+        let stars = [];
+        const numStars = 500;
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            for (let i = 0; i < numStars; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const radius = Math.random() * 2;
+                stars.push({ x, y, radius });
+            }
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            draw();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < numStars; i++) {
+                const star = stars[i];
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+
+                // Check mouse position to draw lines
+                const dx = star.x - mouseX;
+                const dy = star.y - mouseY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < 50) {
+                    ctx.moveTo(star.x, star.y);
+                    ctx.lineTo(mouseX, mouseY);
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                    ctx.stroke();
+                }
+            }
+        }
+
+        let mouseX, mouseY;
+
+        window.addEventListener('mousemove', function(event) {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        });
+
+        window.addEventListener('resize', function() {
+            init();
+        });
+
+        init();
+    </script>
 </body>
 </html>
